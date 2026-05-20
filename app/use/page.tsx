@@ -1,16 +1,53 @@
 "use client";
 
-import { useState } from "react";
-import { tool, ui } from "@/lib/config";
+import { Suspense, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { tool, payment, ui } from "@/lib/config";
 
 /**
- * 使用页 —— 风口来了只需要改 handleSubmit 里的 API 调用逻辑
+ * 使用页 —— 带激活码校验 + 调用次数限制
+ * 风口来了只需要改 handleSubmit 里的 API 调用逻辑
  */
 export default function UsePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-gray-400">加载中…</div>}>
+      <UsePageInner />
+    </Suspense>
+  );
+}
+
+function UsePageInner() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const code = searchParams.get("code") || "";
+
   const [input, setInput] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // 激活码校验
+  const isValidCode = payment.activationCodes.includes(code);
+
+  // 无效激活码 → 显示拦截页
+  if (!isValidCode) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
+        <div className="max-w-md w-full text-center space-y-6">
+          <h1 className="text-2xl font-bold text-gray-800">需要激活码</h1>
+          <p className="text-gray-500 text-sm">
+            请先付款获取激活码后再访问此页面。
+          </p>
+          <button
+            onClick={() => router.push("/")}
+            className="px-8 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
+          >
+            返回首页
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   const handleSubmit = async () => {
     if (!input.trim()) return;

@@ -3,7 +3,7 @@
  *
  * 风口来了只改这一个文件：
  * 1. 改 tool 对象里的工具信息
- * 2. 改 .env.local 里的 API Key 和支付链接
+ * 2. 改 activationCodes 加一批新激活码
  * 3. 部署上线
  *
  * 其他代码一行都不用动。
@@ -36,11 +36,27 @@ export const tool = {
 };
 
 export const payment = {
-  /** 支付按钮文字 */
-  buttonText: "立即购买（¥9.9）",
+  /** 微信收款码图片路径（放在 public/ 目录下） */
+  qrcodeImage: "/qrcode.png",
 
-  /** 面包多支付链接 —— 从 PAYMENT_URL 环境变量读取 */
-  url: process.env.PAYMENT_URL || "#",
+  /** 支付说明 */
+  instructions: [
+    "微信扫码支付 ¥9.9",
+    "付款后截图发微信，获取激活码",
+    "输入激活码即可使用",
+  ],
+
+  /** 手动生成的激活码列表。用户付款后，从这里取一个发给他。 */
+  activationCodes: [
+    "FENG2024-ABCD",
+    "FENG2024-EFGH",
+    "FENG2024-IJKL",
+    "FENG2024-MNOP",
+    "FENG2024-QRST",
+    "FENG2024-UVWX",
+    "FENG2024-YZ01",
+    "FENG2024-2345",
+  ],
 };
 
 export const ui = {
