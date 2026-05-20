@@ -12,13 +12,13 @@ export default function HomePage() {
   const handleActivate = () => {
     const trimmed = codeInput.trim();
     if (!trimmed) {
-      setError("请输入激活码");
+      setError("请输入密码");
       return;
     }
-    if (payment.activationCodes.includes(trimmed)) {
+    if (trimmed === payment.publicPassword) {
       router.push(`/use?code=${encodeURIComponent(trimmed)}`);
     } else {
-      setError("激活码无效，请检查后重试");
+      setError("密码错误，请检查后重试");
     }
   };
 
@@ -68,10 +68,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 激活码输入 */}
+        {/* 密码输入 */}
         <div className="space-y-3">
           <label className="block text-sm font-medium text-gray-700 text-center">
-            输入激活码，开始使用
+            付款后输入通用密码：<span className="text-green-600 font-bold">{payment.publicPassword}</span>
           </label>
           <input
             type="text"
@@ -81,7 +81,7 @@ export default function HomePage() {
               setError("");
             }}
             onKeyDown={(e) => e.key === "Enter" && handleActivate()}
-            placeholder="例如：FENG2024-ABCD"
+            placeholder="输入密码"
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-center text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {error && (

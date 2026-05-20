@@ -42,21 +42,11 @@ export const payment = {
   /** 支付说明 */
   instructions: [
     "微信扫码支付 ¥9.9",
-    "付款后截图发微信，获取激活码",
-    "输入激活码即可使用",
+    "付款后，在下方输入通用密码即可使用",
   ],
 
-  /** 手动生成的激活码列表。用户付款后，从这里取一个发给他。 */
-  activationCodes: [
-    "FENG2024-ABCD",
-    "FENG2024-EFGH",
-    "FENG2024-IJKL",
-    "FENG2024-MNOP",
-    "FENG2024-QRST",
-    "FENG2024-UVWX",
-    "FENG2024-YZ01",
-    "FENG2024-2345",
-  ],
+  /** 通用密码（公开显示在页面上） */
+  publicPassword: "FENG2024-OPEN",
 };
 
 export const ui = {

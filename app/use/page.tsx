@@ -26,17 +26,17 @@ function UsePageInner() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 激活码校验
-  const isValidCode = payment.activationCodes.includes(code);
+  // 密码校验
+  const isValidCode = code === payment.publicPassword;
 
   // 无效激活码 → 显示拦截页
   if (!isValidCode) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
         <div className="max-w-md w-full text-center space-y-6">
-          <h1 className="text-2xl font-bold text-gray-800">需要激活码</h1>
+          <h1 className="text-2xl font-bold text-gray-800">需要密码</h1>
           <p className="text-gray-500 text-sm">
-            请先付款获取激活码后再访问此页面。
+            请先付款后在首页输入密码访问。
           </p>
           <button
             onClick={() => router.push("/")}
